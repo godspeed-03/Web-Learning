@@ -1,0 +1,20 @@
+<script>
+
+
+let prosm = new Promise((resolve, reject) =>{
+setTimeout(() => {
+    // resolve("this wil call after 2 sec ")
+    reject("error")
+    
+}, 2000);
+});
+
+
+prosm.then((msg)=>{
+    console.log(msg)
+
+}).catch((error)=>{
+    console.log(error)
+})
+    
+</script>
