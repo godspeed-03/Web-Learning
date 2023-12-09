@@ -23,7 +23,7 @@ const AppProvider = ({ children }: ProviderProps) => {
       const result = await FetchDatabyQuery(state.query);
       // console.log(result)
       dispatch({
-        type: "Get_Stories",
+        type: "Get_Photos",
         payload: {
           photo: result.photos,
         },

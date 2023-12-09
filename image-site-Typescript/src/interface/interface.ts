@@ -40,9 +40,7 @@ export interface ProviderProps {
   children: ReactNode;
 }
 
-export interface AppContextType {
-  query: string;
-  photo: any;
+export interface AppContextType extends QueryState {
   removepost: (photoid: number) => void;
   searchpost: (searchquery: string) => void;
 }

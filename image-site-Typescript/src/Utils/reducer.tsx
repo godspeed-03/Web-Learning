@@ -2,7 +2,7 @@ import { QueryState, Action } from "../interface/interface";
 const reducer = (state: QueryState, action: Action) => {
   // console.log(state)
   switch (action.type) {
-    case "Get_Stories":
+    case "Get_Photos":
       return {
         ...state,
         photo: action.payload.photo,
