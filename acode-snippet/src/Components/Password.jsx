@@ -15,11 +15,14 @@ function Password() {
           className="border-2 rounded-lg border-blue-600 p-3 w-96"
         />
         <div className="-ml-10">
+          <span onClick={handleclick}>
           {password ? (
-            <Eye onClick={handleclick} />
+            <Eye />
           ) : (
-            <EyeOff onClick={handleclick} />
+            <EyeOff />
           )}
+          </span>
+          
         </div>
       </div>
     </>

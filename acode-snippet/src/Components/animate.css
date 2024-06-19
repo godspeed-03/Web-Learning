@@ -1,0 +1,17 @@
+
+
+.animate2{
+    /* visibility: hidden; */
+    /* opacity: 0; */
+    animation: fadeInDown 0.3s forwards;
+}
+
+@keyframes fadeInDown {
+    0% {
+        transform: translateY(-30px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+  }
+  
