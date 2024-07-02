@@ -1,0 +1,2 @@
+// String method in JavaScript
+
