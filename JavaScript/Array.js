@@ -18,3 +18,16 @@ strarr.splice(2, 0, 'newdate')
 console.log(strarr.splice(3, 1, 'removeddata'))
 console.log(strarr)
 // toreverse, tosorted tostring
+
+
+//Shallow copy : 
+let arr = [1, 2, 3]
+let narr = arr  // create a shsllow copy and point to same refernce
+narr[1]= "new"    // chanes the original arrary         [ 1, 'new', 3 ]
+console.log(arr) //[ 1, 'new', 3 ]
+console.log(narr)  //[ 1, 'new', 3 ]
+
+let sharr = [1, 2,3,4]
+let newSharr = sharr.with(1, "new") // create a deep copy and assign it to another array
+console.log(sharr)         // [ 1, 2, 3, 4 ]  original arr
+console.log(newSharr)   // [ 1, 'new', 3, 4 ] modified array
