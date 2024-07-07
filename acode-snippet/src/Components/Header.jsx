@@ -18,7 +18,7 @@ const Header = () => {
           <ul
             className={`flex gap-3 md:flex  animate  ${
               mobile
-                ? " bg-yellow-500 visible flex-col top-[100px]  absolute left-0 w-full animate2 "
+                ? " bg-yellow-500 visible flex-col top-[100px]  absolute left-0 w-full animate "
                 : "max-md:hidden "
             } `}
           >
