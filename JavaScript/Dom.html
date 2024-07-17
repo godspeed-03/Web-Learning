@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+let body = document.getElementsByTagName('body')
+console.log(body);
+body[0].style.backgroundColor="black";
+body[0].style.color="white";
+
+const div = document.createElement('div')
+div.id = "Uniquediv";
+div.setAttribute('data', 'important-value')
+// div.innerHTML= "body vale"
+// div.innerText = "local body"
+const innertext = document.createTextNode('body value');
+div.appendChild(innertext)
+div.append(innertext)
+
+console.log(div);
+body[0].appendChild(div)
+
+</script>
+</html>
