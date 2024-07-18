@@ -3,12 +3,12 @@
 
 | Easy | Medium | Hard |
 | --- | --- | --- |
-| HTML |  |  |
-| CSS |  |  |
+| ~HTML~ |  |  |
+| ~CSS~ |  |  |
 | Bash basics (cd, ls, pwd, mkdir, touch, vi) |  |  |
 |  | Bash medium (grep, piping, reverse search) |  |
 | Git/Github |  |  |
-| JS Intro, Single threaded nature of JS |  |  |
+| ~JS Intro, Single threaded nature of JS~ |  |  |
 |  | Async JS, callback queue, event loop |  |
 |  |  | Creating promises, Common Promise API methods |
 | Common JS APIs (map, filter, reduce, Object.keys) |  |  |
