@@ -17,11 +17,11 @@
 
 | Easy | Medium | Hard |
 | --- | --- | --- |
-| Intro to DOM, DOM Tree Structure |  |  |
-| Common DOM APIs (getElementById, getElementsByClassName, querySelector, innerHTML, innerText, getAttribute, setAttribute).  |  |  |
-| Event handlers, onClick, stopPropagation,  |  |  |
+| ~Intro to DOM, DOM Tree Structure~ |  |  |
+| ~Common DOM APIs (getElementById, getElementsByClassName, querySelector, innerHTML, innerText, getAttribute, setAttribute).~  |  |  |
+| ~Event handlers, onClick, stopPropagation~  |  |  |
 | localStorage |  |  |
-|  | DOM Manipulation, Dynamic frontends |  |
+|  | ~DOM Manipulation, Dynamic frontends~ |  |
 |  |  | Creating a simple reconciler, Foundation for react |
 
 ## Project
