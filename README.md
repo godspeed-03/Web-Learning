@@ -11,7 +11,7 @@
 | ~JS Intro, Single threaded nature of JS~ |  |  |
 |  | Async JS, callback queue, event loop |  |
 |  |  | Creating promises, Common Promise API methods |
-| Common JS APIs (map, filter, reduce, Object.keys) |  |  |
+| ~Common JS APIs (map, filter, reduce, Object.keys)~ |  |  |
 
 ## Simple frontend, DOM
 
