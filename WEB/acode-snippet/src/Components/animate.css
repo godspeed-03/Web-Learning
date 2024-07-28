@@ -1,4 +1,7 @@
-
+.center{
+width: 10%;
+margin: auto auto;
+}
 
 .animate{
     /* visibility: hidden; */

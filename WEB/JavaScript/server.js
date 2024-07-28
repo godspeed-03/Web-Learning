@@ -1,20 +1,22 @@
-async function  server () {
-    const uri = `${mainURI}?name=${usrname}&vpa=${vpa}`
-    try{
-        const response = await fetch(uri);
-        
-        if(!response.ok){
-            throw new Error ('HTTP error, not correct url parameter as required')
-        }
-        let svgtext = await response.text()
-        console.log(svgtext)
-    } catch(err){
-        console.log(`Error : ${err}`)
-    }
- }
+const date1 = new Date()
 
- const mainURI = "https://upiqr.in/api/qr"
- let usrname = "satyam";
- let vpa = "satyam2001anand@oksbi"
+// Request a weekday along with a long date
+const options1 = {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+};
 
-server()
+
+
+
+const dateTimeFormat2 = new Intl.DateTimeFormat('en-GB', options1);
+console.log(dateTimeFormat2.format(date1, "DD-MM"));
+// Expected output: "Friday, 1 June 2012"
+// "Thursday, December 20, 2012, GMT"
+
+
+
