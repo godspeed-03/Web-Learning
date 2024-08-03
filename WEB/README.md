@@ -7,10 +7,10 @@
 | ~CSS~ |  |  |
 | Bash basics (cd, ls, pwd, mkdir, touch, vi) |  |  |
 |  | Bash medium (grep, piping, reverse search) |  |
-| Git/Github |  |  |
+| ~Git/Github~ |  |  |
 | ~JS Intro, Single threaded nature of JS~ |  |  |
-|  | Async JS, callback queue, event loop |  |
-|  |  | Creating promises, Common Promise API methods |
+|  | ~Async JS, callback queue, event loop~ |  |
+|  |  | ~Creating promises, Common Promise API methods~ |
 | ~Common JS APIs (map, filter, reduce, Object.keys)~ |  |  |
 
 ## Simple frontend, DOM
@@ -22,7 +22,7 @@
 | ~Event handlers, onClick, stopPropagation~  |  |  |
 | localStorage |  |  |
 |  | ~DOM Manipulation, Dynamic frontends~ |  |
-|  |  | Creating a simple reconciler, Foundation for react |
+|  |  | ~Creating a simple reconciler, Foundation for react~ |
 
 ## Project
 
@@ -89,10 +89,10 @@
 
 ## React
 
-| Revise DOM, foundation of React, why frontend frameworks |  |  |
+| ~Revise DOM, foundation of React, why frontend frameworks~ |  |  |
 | --- | --- | --- |
-| Components in react | useState, useEffect |  |
-| Routing in react |  | Connecting FE to BE |
+| ~Components in react~ | ~useState, useEffect~ |  |
+| ~Routing in react~ |  | Connecting FE to BE |
 |  |  | useRef, useMemo, useCallback |
 |  | Custom hooks |  |
 |  | Context API |  |
@@ -104,8 +104,8 @@
 
 | Easy | Medium | Hard |
 | --- | --- | --- |
-| Material UI |  |  |
-|  | Tailwind |  |
+| ~Material UI~ |  |  |
+|  | ~Tailwind~ |  |
 |  | Shadcn |  |
 |  |  |  |
 
