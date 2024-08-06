@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './animate.css'
+import Thembtn from "./Thembtn";
 
 const Header = () => {
   const [mobile, setMobile] = useState(false);
@@ -27,6 +28,8 @@ const Header = () => {
             <li onClick={openmobile}>cool</li>
             <li onClick={openmobile}>job</li>
             <li onClick={openmobile}>gog</li>
+            <li onClick={openmobile}><Thembtn/></li>
+
           </ul>
         </nav>
         <div className="md:hidden">
