@@ -1,19 +1,17 @@
 import React from 'react'
 import useTheme from '../Context/Context'
+import { useDispatch, useSelector } from 'react-redux'
+import { switchTheme } from '../Store/Reducer_slices'
 
 
 function Thembtn() {
-    const {thememode, setThememode} = useTheme()
-    console.log(thememode)
+    // const {thememode, setThememode} = useTheme()
+    const dispatch = useDispatch()
+    const tmememode = useSelector(state => state.theme.thememode)
+    console.log(tmememode)
 
     const handleclick = () => {
-        setThememode(!thememode)
-        
-        // if(thememode == "light"){
-        //     darkMode();
-        // }else{
-        //     lightMode()
-        // }
+        dispatch(switchTheme(!tmememode))
 
     }
   return (
