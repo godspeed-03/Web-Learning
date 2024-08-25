@@ -15,5 +15,12 @@ app.use(express.urlencoded({
 // (err, req, res, next)
 
 
+// import routes
+
+import userRouter from './routes/user.routes.js';
+
+app.use('/api/v1/user', userRouter)
+
+
 
 export default app;
