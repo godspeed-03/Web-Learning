@@ -10,7 +10,7 @@ import fs from 'fs'
         api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
     });
 
-const fileuploadcontroller = async (filepathname) => {
+export const fileuploadcontroller = async (filepathname) => {
     try {
         if (!filepathname) return null;
         const response = await cloudinary.uploader.upload(
@@ -29,18 +29,18 @@ const fileuploadcontroller = async (filepathname) => {
 }
 
     
-    // Upload an image
-     const uploadResult = await cloudinary.uploader
-       .upload(
-           'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-               public_id: 'shoes',
-           }
-       )
-       .catch((error) => {
-           console.log(error);
-       });
+    // // Upload an image
+    //  const uploadResult = await cloudinary.uploader
+    //    .upload(
+    //        'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
+    //            public_id: 'shoes',
+    //        }
+    //    )
+    //    .catch((error) => {
+    //        console.log(error);
+    //    });
     
-    console.log(uploadResult);
+    // console.log(uploadResult);
     
     // Optimize delivery by resizing and applying auto-format and auto-quality
     // const optimizeUrl = cloudinary.url('shoes', {
