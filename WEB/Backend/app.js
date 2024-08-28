@@ -17,9 +17,9 @@ app.use(express.urlencoded({
 
 // import routes
 
-import userRouter from './routes/user.routes.js';
+import router from './src/routes/user.routes.js';
 
-app.use('/api/v1/user', userRouter)
+app.use('/api/v1/user', router)
 
 
 

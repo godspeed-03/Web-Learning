@@ -1,4 +1,4 @@
-import connectDB from './DB/CoonectToDB.js';
+import connectDB from './src/DB/CoonectToDB.js';
 import app from './app.js'
 const PORT = process.env.PORT  || 8080
 

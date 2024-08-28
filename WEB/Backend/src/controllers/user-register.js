@@ -12,14 +12,14 @@ export const register = async (req, res) => {
         throw new ApiError(406, 'All fields are required')
     }
 
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }],
     })
 
     if (existedUser) {
         throw new ApiError(409, "User already registered")
     }
-
+console.log(req.files)
     const localAvatarPath = req.files?.avatar[0]?.path;
     const localCoverImagePath = req.files?.coverImage[0]?.path;
 
@@ -39,7 +39,6 @@ export const register = async (req, res) => {
         fullName: fullName,
         avatar : avatarpath.url,
         coverImage : coverImagepath?.url || "",
-        watchHistory : [],
         password: password
     })
 
@@ -47,7 +46,7 @@ const createduser = await User.findById(newUser._id).select(
     "-password -refreshToken"
 )
 
-if(createduser){
+if(!createduser){
     throw new ApiError(500, "Something went wrong while creating user")
 }
 
