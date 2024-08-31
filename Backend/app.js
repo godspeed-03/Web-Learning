@@ -17,7 +17,10 @@ app.use( express.urlencoded( {
 // import routes
 
 import router from "./src/routes/user.routes.js";
+import errorHandler from "./src/middleware/error.middleware.js";
 
 app.use( "/api/v1/user", router );
+
+app.use( errorHandler );
 
 export default app;
