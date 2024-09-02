@@ -33,9 +33,9 @@
 | easy | medium | hard |
 | --- | --- | --- |
 | What is a JS runtime |  |  |
-| Node.js installation, common APIs |  |  |
-| file system api, fetch.  |  |  |
-| External packages, axios vs fetch |  |  |
+| ~Node.js installation, common APIs~ |  |  |
+| file system api, ~fetch~.  |  |  |
+| ~External packages~, axios vs fetch |  |  |
 |  | v8, cf runtime |  |
 |  |  | stream, worker threads, cluster module,  |
 
@@ -43,25 +43,25 @@
 
 | Simple | Medium | Advance |  |
 | --- | --- | --- | --- |
-| What are HTTP Servers |  |  |  |
-| Methods, routes, URLs, IPs and domains |  |  |  |
-|  | headers, body, query parameters |  |  |
-|  | Intro to express, creating routes |  |  |
-|  | Middlewares in express |  |  |
+| ~What are HTTP Servers~ |  |  |  |
+| ~Methods, routes, URLs, IPs and domains~ |  |  |  |
+|  | ~headers, body, query parameters~ |  |  |
+|  | ~Intro to express, creating routes~ |  |  |
+|  | ~Middlewares in express~ |  |  |
 |  | File system like DBs |  |  |
-|  | Authentication using jwts, basics of jwts |  |  |
+|  | ~Authentication using jwts, basics of jwts~ |  |  |
 |  | Secret management using Doppler |  |  |
 
 ### NoSQL Databases
 
 | Easy | Medium | Hard |
 | --- | --- | --- |
-| Intro to Databases |  |  |
-|  | SQL vs NoSQL |  |
-| MongoDB Intro, getting your first DB |  |  |
-| mongoose, Schemas etc. Simple CRUD |  |  |
-|  | Relationships intro |  |
-|  | Relationsips in Mongo |  |
+| ~Intro to Databases~ |  |  |
+|  | ~SQL vs NoSQ~L |  |
+| ~MongoDB Intro, getting your first DB~ |  |  |
+| ~mongoose, Schemas etc. Simple CRUD~ |  |  |
+|  | ~Relationships intro~ |  |
+|  | ~Relationsips in Mongo~ |  |
 |  | Aggregations in mongo |  |
 
 ## SQL Databases
@@ -76,6 +76,10 @@
 |  |  | Transactions and Concurrency Control |
 |  |  | Normalization |
 |  | Sub queries, batch queries |  |
+
+## Webpack
+
+## NPm pakage for backend setup with es lint prettier nas eslint all setup
 
 ## ORMs
 
@@ -93,12 +97,12 @@
 | --- | --- | --- |
 | ~Components in react~ | ~useState, useEffect~ |  |
 | ~Routing in react~ |  | Connecting FE to BE |
-|  |  | useRef, useMemo, useCallback |
-|  | Custom hooks |  |
-|  | Context API |  |
-|  | Intro to state management |  |
-|  | intro to recoil, atoms and selectors |  |
-|  |  | atomFamily, selectorFamily |
+|  |  | ~useRef, useMemo, useCallback~ |
+|  | ~Custom hooks~ |  |
+|  | ~Context API~ |  |
+|  | ~Intro to state management~ |  |
+|  | ~intro to recoil, atoms and selectors~ |  |
+|  |  | ~atomFamily, selectorFamily~ |
 
 ## Styling React apps
 
