@@ -2,6 +2,7 @@ import { Router } from "express";
 import { login, logout, register } from "../controllers/user-register.js";
 import { upload } from "../middleware/multer.middleware.js";
 import { verifyJWT } from "../middleware/verifyJWT.middleware.js";
+import downloadUsers from "../controllers/downloaduser.js";
 
 const router = Router();
 
@@ -28,5 +29,7 @@ router.route( "/logout" ).post(
   logout
 
 );
+
+router.route('/down').get(downloadUsers)
 
 export default router;
