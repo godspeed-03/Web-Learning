@@ -21,7 +21,7 @@ const generateRefreshTokenAndAccessToken = async( userId ) => {
 };
 
 export const register = async ( req, res, next ) => {
-  try {
+  // try {
     const { username, email, fullName, avatar, coverImage, password } = req.body;
   
     if ( [ username, email, fullName, password ].some( ( fields ) => (
@@ -75,10 +75,10 @@ export const register = async ( req, res, next ) => {
     res.status( 201 ).json(
       new ApiResponse( 200, createduser, "User registered successfully" )
     );
-  } catch ( error ) {
-    next( error );
+  // } catch ( error ) {
+  //   next( error );
     
-  }
+  // }
 
 };
 

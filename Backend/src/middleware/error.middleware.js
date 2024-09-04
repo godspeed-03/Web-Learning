@@ -10,7 +10,7 @@ const errorHandler = ( err, req, res, next ) => {
 
   // Handle unknown errors
   res.status( 500 ).json(
-    new ApiResponse( 500, null, "An unexpected error occurred. Please try again later." )
+    new ApiResponse( 500, null, err.message )
   );
 };
 
