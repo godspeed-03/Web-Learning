@@ -4,6 +4,7 @@ import Header from './Components/Header'
 import CenterDiv from './Components/CenterDiv'
 import useTheme from './Context/Context'
 import { useSelector } from 'react-redux'
+import DownloadButton from './Components/doenload'
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
  
   return (
     <>
+    <DownloadButton />
     <Header />
     <Password />
     <CenterDiv />
