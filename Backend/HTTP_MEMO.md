@@ -1,3 +1,129 @@
+# How to contribute setup server locally
+
+Server is running on a public domain : `https://sparsh.up.railway.app/api/v1`
+
+This should be a pretty simple setup, as the app doesn't have many external service dependencies.
+
+## Forking and Cloning the project
+
+Development is on development branch. 
+
+to clone a single branch development 
+
+```
+git clone --branch developemnt https://github.com/Sparsh-PU/sparsh-Backend.git
+
+```
+
+To clone main production branch 
+```
+git clone https://github.com/Sparsh-PU/sparsh-Backend.git
+
+```
+
+
+I suggest reading the [Github's guide on forking projects.](https://guides.github.com/activities/forking/)
+
+<br />
+
+## Visual Studio Code Setup
+
+I also suggest using Visual Studio Code as your IDE, with the following extensions installed:
+
+- ESLint
+- Prettier - Code formatter
+
+<br />
+
+## Installing Node.js
+
+The app depend on Node.js, a JavaScript runtime built on Chrome's V8 Engine.
+
+You can download it here: https://nodejs.org/en/download/. The project currently supports version 18.17+
+
+<br />
+
+## Installing dependencies
+
+Open the terminal on the root directory (I use the VSCode terminal) and do the following steps:
+
+Go into the app directory
+
+```
+cd sparsh-backend
+```
+
+Install dependencies using npm
+
+```
+npm i
+```
+
+This should add a _package-lock.json_ file and a _node_modules_ directory inside the _app_ directory.
+
+<br />
+
+## Environment Variables
+
+Copy all the variables to configure the server
+
+```
+touch .env 
+```
+or create new .env file
+
+**copy all envs to .env file**
+
+<br />
+<br />
+
+**Finally! You're done with the setup and installation, now you can start the server**
+
+## Running the development app
+
+If you have done every step above, you're ready to start developing.
+
+Make sure you're in the app directory, if you're not, run this command:
+
+```
+cd sparsh-backend
+```
+
+And now you can start the app by running the command:
+
+```
+npm run start
+```
+
+And there it is! You can now access the app at:
+
+http://localhost:8000
+
+
+
+# Commit protocols
+
+### Type: The type of change, which could be one of the following:
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `perf`: A code change that improves performance
+- `test`: Adding missing or correcting existing tests
+- `chore`: Changes to the build process or auxiliary tools and libraries such as documentation generation
+
+### Commit Msg protocol
+
+`[Type]`: Brief Summary of Changes
+
+Detailed description of the change, reasoning behind it, and any additional information that might be useful for other developers or for future reference.
+
+`Fixes`: `#[Issue Number]` (if applicable)
+`Related`: `#[Issue Number]` (if applicable)
+
+# HTTP response code Protocol
 ### 1xx : Information Response
 - 100 : Continue — Server received request from Headers. After, Client should send Body.
 - 101 : Switching Protocol — Notice server change Protocol
