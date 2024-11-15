@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    box-shadow: 5px 5px 5px 5px grey;
+  }
+  .header {
+    text-align: center;
+    color: #333333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .message {
+    color: #555555;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .otp {
+    background-color: #f2f9ff;
+    padding: 8px 15px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 20px;
+    color: #000000;
+    font-weight: bold;
+    display: inline-block;
+  }
+  .img {
+    width: 22px;
+    height: 22px;
+    background-position: center center;
+    background-size: cover;
+
+  }
+  .footer {
+    font-size: 12px;
+    color: #999999;
+    text-align: center;
+    margin-top: 30px;
+  }
