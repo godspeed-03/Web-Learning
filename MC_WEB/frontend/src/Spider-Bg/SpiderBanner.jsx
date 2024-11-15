@@ -11,7 +11,6 @@ const SpiderBanner = ({
   const colorArray = colors && colors.length > 0 ? colors : ["white", "black"];
   const length = lineLenght > 100 ? lineLenght : 100;
 
-  console.log(colorArray, dotnumber, length)
 
   const bannerRef = useRef();
   const canvasRef = useRef();
@@ -39,10 +38,7 @@ const SpiderBanner = ({
 
   useEffect(() => {
     if (dimension.width && dimension.height) {
-      const totalDots = Math.floor(
-        dotnumber * ((dimension.width * dimension.height) / (1522 * 718))
-      );
-      const generatedDots = Array.from({ length: totalDots }, () => ({
+      const generatedDots = Array.from({ length: dotnumber }, () => ({
         x: Math.random() * dimension.width,
         y: Math.random() * dimension.height,
         size: Math.random() * 3 + 5,
@@ -51,7 +47,7 @@ const SpiderBanner = ({
 
       setDots(generatedDots);
     }
-  }, [ dimension.width, dimension.height]);
+  }, [dimension.width, dimension.height]);
 
   // Draw dots and lines on canvas
   useEffect(() => {
@@ -66,14 +62,29 @@ const SpiderBanner = ({
           canvasRef.current.width,
           canvasRef.current.height
         );
+
         dots.forEach((dot) => {
           context.fillStyle = dot.color;
           context.beginPath();
           context.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
           context.fill();
+          ``;
         });
 
-        if (mousePosition.x > 0 && mousePosition.y > 0) {
+        console.log(mousePosition.x, canvasRef.current.width -10)
+
+        const ratio = window.devicePixelRatio || 1;
+
+        if (
+          mousePosition.x <= 10 ||
+          mousePosition.y <= 10 ||
+          mousePosition.x * ratio >= canvasRef.current.width - 10 ||
+          mousePosition.y * ratio >= canvasRef.current.height - 10
+        ) {
+          return;
+        }
+
+        if (mousePosition.x > 10 && mousePosition.y > 10) {
           dots.forEach((dot) => {
             const distance = Math.sqrt(
               (mousePosition.x - dot.x) ** 2 + (mousePosition.y - dot.y) ** 2
@@ -89,7 +100,6 @@ const SpiderBanner = ({
             }
           });
         }
-
       }
     };
 
@@ -116,11 +126,13 @@ const SpiderBanner = ({
     }
   }, [dimension]);
 
-  return (
+ return (
     <section
       ref={bannerRef}
       onMouseMove={handleMouseMove}
-      className={`banner relative ${className || ""}`}
+      className={`banner relative ${
+        className || ""
+      }`}
     >
       {children}
       <canvas
