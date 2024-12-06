@@ -46,7 +46,7 @@ export const sendEmail = async () => {
       to: 'satyam2001anand@gmail.com',
       subject: 'Testing Handlebars Email',
       // html: html,
-      template: 'signup', // name of the .hbs file in your views folder (without extension)
+      template: 'email', // name of the .hbs file in your views folder (without extension)
       context: emailcontext
     };
 
