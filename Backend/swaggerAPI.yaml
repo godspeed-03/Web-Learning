@@ -1,0 +1,2816 @@
+openapi: 3.0.0
+info:
+  title: Event-DTL
+  version: 1.0.0
+  description: API for Event-dtl
+servers:
+  - url: 'https://development.eventdtl.in/api/v1'
+    description: Test/Development Server
+  - url: 'https://https://url.com/api/v1'
+    description: Production server
+  - url: 'http://localhost:8000/api/v1'
+    description: Local server
+paths:
+
+# User APIs
+
+  /user/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+                phone:
+                  type: string
+                  example: '+91 1234567890'
+                gender:
+                  type: string
+                  example: 'male'
+                password:
+                  type: string
+                  example: password123
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: User registered successfully, Please verify your email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      email:
+                       type: string
+                       format: email
+                       example: "user@example.com"
+                  message:
+                    type: string
+                    example: User registered successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: 'User already exists with the email, User already exists with this phone'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'User already exists with the email, User already exists with this phone'
+                  success:
+                    type: boolean
+                    example: false                    
+        '406':
+          description: 'All fields are required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'All fields are required'
+                  success:
+                    type: boolean
+                    example: false
+        '408':
+          description: 'Unable to upload avatar. Please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 408
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Unable to upload avatar. Please try again'
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'Something went wrong while creating user, err.message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Something went wrong while creating user, err.message'
+                  success:
+                    type: boolean
+                    example: false
+  /user/verifyotp:
+    post:
+      summary: Verify the otp for registered users
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+                otp:
+                  type: string
+                  example: '123456'   
+      responses:
+        '200':
+          description: User verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 66d46810da1fab58b8633ba8
+                          fullName:
+                            type: string
+                            example: John Doe
+                          email:
+                            type: string
+                            format: email
+                            example: johndoe@example.com
+                          phone:
+                            type: string
+                            example: '1234567890'
+                          gender:
+                            type: string
+                            example: 'male'
+                          avatar:
+                            type: string
+                            format: uri
+                            example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                          userType: 
+                            type: string
+                            example:  "normal, orgInreview, orgRejected, organiser"
+                          isVerified: 
+                            type: boolean
+                            example: true
+                          likedEvent: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          bookings_id: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:11:44.052Z'
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:12:02.793Z'
+                          __v:
+                            type: integer
+                            example: 0
+                  message:
+                    type: string
+                    example: User verified successfully
+                  success:
+                    type: boolean
+                    example: true               
+        '400':
+          description: 'Invalid OTP'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Invalid OTP'
+                  success:
+                    type: boolean
+                    example: false
+        '404':
+          description: 'User not found, Please sign up'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'User not found, Please sign up'
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: 'Email and Otp are required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Email and Otp are required'
+                  success:
+                    type: boolean
+                    example: false
+  /user/getotp:
+    post:
+      summary: Get the otp for registered users
+      tags:
+        - Users
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+      responses:
+        '202':
+          description: Otp sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: User verified successfully
+                  success:
+                    type: boolean
+                    example: true               
+        '404':
+          description: 'User not found, Please sign up'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'User not found, Please sign up'
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: 'Email is required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Email is required'
+                  success:
+                    type: boolean
+                    example: false
+  /user/login:
+    post:
+      summary: Log in an existing user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+                password:
+                  type: string
+                  example: password123
+      responses:
+        '200':
+          description: User logged-in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 66d46810da1fab58b8633ba8
+                          fullName:
+                            type: string
+                            example: John Doe
+                          email:
+                            type: string
+                            format: email
+                            example: johndoe@example.com
+                          phone:
+                            type: string
+                            example: '1234567890'
+                          gender:
+                            type: string
+                            example: 'male'
+                          avatar:
+                            type: string
+                            format: uri
+                            example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                          userType: 
+                            type: string
+                            example:  "normal, orgInreview, orgRejected, organiser"
+                          isVerified: 
+                            type: boolean
+                            example: true
+                          likedEvent: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          bookings_id: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:11:44.052Z'
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:12:02.793Z'
+                          __v:
+                            type: integer
+                            example: 0
+                  message:
+                    type: string
+                    example: User logged in successfully
+                  success:
+                    type: boolean
+                    example: true   
+        '203':
+          description: 'User is not verified, Please verify'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 203
+                  data:
+                    properties:
+                      userEmail:
+                        type: string
+                        example: johndoe@example.com
+                  message:
+                    type: string
+                    example: 'User is not verified, Please verify'
+                  success:
+                    type: boolean
+                    example: false                    
+        '404':
+          description: 'User not found, Please sign up'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'User not found, Please sign up'
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: 'Email and Password are required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Email and Password are required'
+                  success:
+                    type: boolean
+                    example: false
+        '400':
+          description: 'Incorrect password, Please enter correct password'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Incorrect password, Please enter correct password'
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'An unexpected error occurred. Please try again later.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'An unexpected error occurred. Please try again later.'
+                  success:
+                    type: boolean
+                    example: false
+  /user/logout:
+    post:
+      summary: Log out the current user
+      tags:
+        - Users
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      responses:
+        '202':
+          description: User logged out successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: User logged out successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+  /user/refreshtoken:
+    post:
+      summary: Refresh the access token
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: SAMPLE_REFRESH_TOKEN
+      responses:
+        '201':
+          description: Access token refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Access token refreshed successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Refresh token is expired or used
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Refresh token is expired or used
+                  success:
+                    type: boolean
+                    example: false
+        '403':
+          description: Invalid authentication, Please login again
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid authentication, Please login again
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Refresh token is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Refresh token is required
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'An unexpected error occurred. Please try again later.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'An unexpected error occurred. Please try again later.'
+                  success:
+                    type: boolean
+                    example: false
+  /user/userdata:
+    get:
+      summary: To get user data
+      tags:
+        - Users
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      responses:
+        '200':
+          description: User is fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 66d46810da1fab58b8633ba8
+                          fullName:
+                            type: string
+                            example: John Doe
+                          email:
+                            type: string
+                            format: email
+                            example: johndoe@example.com
+                          phone:
+                            type: string
+                            example: '1234567890'
+                          gender:
+                            type: string
+                            example: 'male'
+                          avatar:
+                            type: string
+                            format: uri
+                            example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                          organizerStatus: 
+                            type: string
+                            example: 'false'
+                          isVerified: 
+                            type: boolean
+                            example: false
+                          likedEvent: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:11:44.052Z'
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:12:02.793Z'
+                          __v:
+                            type: integer
+                            example: 0
+                  message:
+                    type: string
+                    example: User is fetched successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false 
+  /user/changepassword:
+    put:
+      summary: To change password of logged in user
+      tags:
+        - Users
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  example: 'password123'
+                newPassword:
+                  type: string
+                  example: 'password123434'
+      responses:
+        '202':
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Password updated successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Old password did not match, please try again
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Old password did not match, please try again
+                  success:
+                    type: boolean
+                    example: false
+        '401':
+          description: Invalid Auth identity, User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid Auth identity, User not found
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+  /user/resetpassword:
+    put:
+      summary: To change password of logged in user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com              
+                otp:
+                  type: string
+                  example: '123456'
+                newPassword:
+                  type: string
+                  example: 'password123434'
+      responses:
+        '202':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Password reset successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid or expired OTP
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid or expired OTP
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Email, Otp and Password are required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Email, Otp and Password are required
+                  success:
+                    type: boolean
+                    example: false                    
+  /user/changevavtar:
+    put:
+      summary: To change avatar of logged in user
+      tags:
+        - Users
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      requestBody:
+        required: true
+        content:  
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '202':
+          description: Avatar Updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Avatar Updated successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Invalid Auth identity, User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid Auth identity, User not found
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Avatar is required, Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Avatar is required, Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+        '408':
+          description: Unable to upload avatar. Please try again
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Unable to upload avatar. Please try again
+                  success:
+                    type: boolean
+                    example: false        
+
+# Admin APIs
+
+  /admin/register:
+    post:
+      summary: Register a new admin
+      tags:
+        - Admins
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+                phone:
+                  type: string
+                  example: '+91 1234567890'
+                gender:
+                  type: string
+                  example: 'male'
+                password:
+                  type: string
+                  example: password123
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Admin registered successfully, Please verify your email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      adminEmail:
+                       type: string
+                       format: email
+                       example: "admin@example.com"
+                  message:
+                    type: string
+                    example: Admin registered successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: 'Admin already exists with the email, Admin already exists with this phone'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Admin already exists with the email, Admin already exists with this phone'
+                  success:
+                    type: boolean
+                    example: false                    
+        '406':
+          description: 'All fields are required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'All fields are required'
+                  success:
+                    type: boolean
+                    example: false
+        '408':
+          description: 'Unable to upload avatar. Please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 408
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Unable to upload avatar. Please try again'
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'Something went wrong while creating admin, err.message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Something went wrong while creating admin, err.message'
+                  success:
+                    type: boolean
+                    example: false
+  /admin/verifyotp:
+    post:
+      summary: Verify the otp for registered admins
+      tags:
+        - Admins
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+                otp:
+                  type: string
+                  example: '123456'   
+      responses:
+        '200':
+          description: Admin verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      admin:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 66d46810da1fab58b8633ba8
+                          fullName:
+                            type: string
+                            example: John Doe
+                          email:
+                            type: string
+                            format: email
+                            example: johndoe@example.com
+                          phone:
+                            type: string
+                            example: '1234567890'
+                          gender:
+                            type: string
+                            example: 'male'
+                          avatar:
+                            type: string
+                            format: uri
+                            example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                          userType: 
+                            type: string
+                            example: 'admin'
+                          isVerified: 
+                            type: boolean
+                            example: true
+                          likedEvent: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          bookings_id: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:11:44.052Z'
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:12:02.793Z'
+                          __v:
+                            type: integer
+                            example: 0
+                  message:
+                    type: string
+                    example: Admin verified successfully
+                  success:
+                    type: boolean
+                    example: true               
+        '400':
+          description: 'Invalid OTP'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Invalid OTP'
+                  success:
+                    type: boolean
+                    example: false
+        '404':
+          description: 'Admin not found, Please sign up'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Admin not found, Please sign up'
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: 'Email and Otp are required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Email and Otp are required'
+                  success:
+                    type: boolean
+                    example: false
+  /admin/getotp:
+    post:
+      summary: Get the otp for registered admins
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+      responses:
+        '202':
+          description: Otp sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Admin verified successfully
+                  success:
+                    type: boolean
+                    example: true               
+        '404':
+          description: 'Admin not found, Please sign up'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Admin not found, Please sign up'
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: 'Email is required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Email is required'
+                  success:
+                    type: boolean
+                    example: false
+  /admin/login:
+    post:
+      summary: Log in an existing admin
+      tags:
+        - Admins
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com
+                password:
+                  type: string
+                  example: password123
+      responses:
+        '200':
+          description: Admin logged-in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      admin:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 66d46810da1fab58b8633ba8
+                          fullName:
+                            type: string
+                            example: John Doe
+                          email:
+                            type: string
+                            format: email
+                            example: johndoe@example.com
+                          phone:
+                            type: string
+                            example: '1234567890'
+                          gender:
+                            type: string
+                            example: 'male'
+                          avatar:
+                            type: string
+                            format: uri
+                            example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                          userType: 
+                            type: string
+                            example: 'admin'
+                          isVerified: 
+                            type: boolean
+                            example: true
+                          likedEvent: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          bookings_id: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:11:44.052Z'
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:12:02.793Z'
+                          __v:
+                            type: integer
+                            example: 0
+                  message:
+                    type: string
+                    example: Admin logged in successfully
+                  success:
+                    type: boolean
+                    example: true   
+        '203':
+          description: 'Admin is not verified, Please verify'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 203
+                  data:
+                    properties:
+                      userEmail:
+                        type: string
+                        example: johndoe@example.com
+                  message:
+                    type: string
+                    example: 'Admin is not verified, Please verify'
+                  success:
+                    type: boolean
+                    example: false                    
+        '404':
+          description: 'Admin not found, Please sign up'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Admin not found, Please sign up'
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: 'Email and Password are required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Email and Password are required'
+                  success:
+                    type: boolean
+                    example: false
+        '400':
+          description: 'Incorrect password, Please enter correct password'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Incorrect password, Please enter correct password'
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'An unexpected error occurred. Please try again later.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'An unexpected error occurred. Please try again later.'
+                  success:
+                    type: boolean
+                    example: false
+  /admin/logout:
+    post:
+      summary: Log out the current admin
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      responses:
+        '202':
+          description: Admin logged out successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Admin logged out successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+  /admin/refreshtoken:
+    post:
+      summary: Refresh the access token
+      tags:
+        - Admins
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: SAMPLE_REFRESH_TOKEN
+      responses:
+        '201':
+          description: Access token refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Access token refreshed successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Refresh token is expired or used
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Refresh token is expired or used
+                  success:
+                    type: boolean
+                    example: false
+        '403':
+          description: Invalid authentication, Please login again
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid authentication, Please login again
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Refresh token is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Refresh token is required
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'An unexpected error occurred. Please try again later.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'An unexpected error occurred. Please try again later.'
+                  success:
+                    type: boolean
+                    example: false
+  /admin/admindata:
+    get:
+      summary: To get admin data
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      responses:
+        '200':
+          description: Admin is fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      admin:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 66d46810da1fab58b8633ba8
+                          fullName:
+                            type: string
+                            example: John Doe
+                          email:
+                            type: string
+                            format: email
+                            example: johndoe@example.com
+                          phone:
+                            type: string
+                            example: '1234567890'
+                          gender:
+                            type: string
+                            example: 'male'
+                          avatar:
+                            type: string
+                            format: uri
+                            example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                          organizerStatus: 
+                            type: string
+                            example: 'false'
+                          isVerified: 
+                            type: boolean
+                            example: false
+                          likedEvent: 
+                            type: array
+                            items:
+                              type: string
+                              format: uuid
+                              example: []
+                          createdAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:11:44.052Z'
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            example: '2024-09-01T13:12:02.793Z'
+                          __v:
+                            type: integer
+                            example: 0
+                  message:
+                    type: string
+                    example: Admin is fetched successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false 
+  /admin/changepassword:
+    put:
+      summary: To change password of logged in admin
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  example: 'password123'
+                newPassword:
+                  type: string
+                  example: 'password123434'
+      responses:
+        '202':
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Password updated successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Old password did not match, please try again
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Old password did not match, please try again
+                  success:
+                    type: boolean
+                    example: false
+        '401':
+          description: Invalid Auth identity, Admin not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid Auth identity, Admin not found
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+  /admin/resetpassword:
+    put:
+      summary: To change password of logged in admin
+      tags:
+        - Admins
+      requestBody:
+        required: true
+        content:  
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: johndoe@example.com              
+                otp:
+                  type: string
+                  example: '123456'
+                newPassword:
+                  type: string
+                  example: 'password123434'
+      responses:
+        '202':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Password reset successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid or expired OTP
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid or expired OTP
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Email, Otp and Password are required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Email, Otp and Password are required
+                  success:
+                    type: boolean
+                    example: false                    
+  /admin/changevavtar:
+    put:
+      summary: To change avatar of logged in admin
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      requestBody:
+        required: true
+        content:  
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '202':
+          description: Avatar Updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Avatar Updated successfully
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Invalid Auth identity, Admin not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid Auth identity, Admin not found
+                  success:
+                    type: boolean
+                    example: false
+        '406':
+          description: Avatar is required, Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Avatar is required, Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+        '408':
+          description: Unable to upload avatar. Please try again
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Unable to upload avatar. Please try again
+                  success:
+                    type: boolean
+                    example: false        
+  /admin/deleteuser/{userType}/{id}:
+    delete:
+      summary: To change avatar of logged in admin
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      parameters:
+        - in: path
+          name: userType
+          required: true
+          schema:
+            type: string
+            enum:
+              - 
+              - admin
+          description: "The type of user to delete. Can be either 'user' or 'admin'."
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: "The ID of the user/admin to be deleted."
+      responses:
+        '202':
+          description: Admin/User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 202
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example: Admin/User deleted successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Sorry, the action can't be performed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Sorry, the action can't be performed
+                  success:
+                    type: boolean
+                    example: false
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false                    
+        '404':
+          description: Admin/User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Admin/User not found
+                  success:
+                    type: boolean
+                    example: false
+ 
+        '406':
+          description: Id and User Type are required, Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Id and User Type are required, Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+  /admin/changeusertype/{id}/:
+    put:
+      summary: To change status of user
+      tags:
+        - Admins
+      security:
+        - AccessTokenAuth: []
+        - RefreshTokenAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: "The ID of the user whose status needs to be upgraded"
+        - in: query
+          name: status
+          required: false
+          schema:
+            type: string
+            enum:
+              - accepted
+              - rejected
+          description: "The status of user to be changed"      
+      responses:
+        '201':
+          description: UserName's status updated to status.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    type: object
+                    nullable: true 
+                  message:
+                    type: string
+                    example:  UserName's status updated to status.
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Sorry, the action can't be performed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Sorry, the action can't be performed
+                  success:
+                    type: boolean
+                    example: false
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false                    
+        '404':
+          description: No user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: No user found
+                  success:
+                    type: boolean
+                    example: false
+ 
+        '406':
+          description: Invalid ID format, Missing `status` query parameter. Acceptable values are 'accepted' or 'rejected', Invalid status. Acceptable values are 'accepted' or 'rejected'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid ID format, Missing `status` query parameter. Acceptable values are 'accepted' or 'rejected', Invalid status. Acceptable values are 'accepted' or 'rejected'
+                  success:
+                    type: boolean
+                    example: false
+
+# Organiser APIs
+
+  /org/register:
+    post:
+      summary: Register a new organiser
+      tags:
+        - Organiser
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: UUIDs
+                  example: 66d46810da1fab58b8633ba8
+                companyName:
+                  type: string
+                  example: Velocity
+                bio:
+                  type: string
+                  example: Velocity                  
+                companyLogo:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Admin registered successfully, Please verify your email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: UUIDs
+                        example: 66d46810da1fab58b8633ba8
+                      userId:
+                        type: UUIDs
+                        example: 66d46810da1fab58b8633ba8
+                      companyName:
+                        type: string
+                        example: Velocity
+                      bio:
+                        type: string
+                        example: lorem ispum dollor
+                      companyLogo:
+                        type: string
+                        format: uri
+                        example: 'http://res.cloudinary.com/djjinjn9m/image/upload/v1725196303/tampg81nsuwpoul7rcyo.png'
+                  message:
+                    type: string
+                    example: Hey Jhon Doe, Application for Velocity has been sent successfully
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Organiser already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Organiser already exists
+                  success:
+                    type: boolean
+                    example: false       
+        '401':
+          description: Invalid auth identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: Invalid auth identity
+                  success:
+                    type: boolean
+                    example: false                                         
+        '406':
+          description: All fields are required, Auth Identity is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 406
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: All fields are required, Auth Identity is required
+                  success:
+                    type: boolean
+                    example: false
+        '408':
+          description: 'Unable to upload logo. Please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 408
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Unable to upload logo. Please try again'
+                  success:
+                    type: boolean
+                    example: false
+        '500':
+          description: 'Something went wrong while creating admin, err.message'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                  data:
+                    type: object
+                    nullable: true
+                  message:
+                    type: string
+                    example: 'Something went wrong while creating admin, err.message'
+                  success:
+                    type: boolean
+                    example: false
+
+components:
+  securitySchemes:
+    AccessTokenAuth:
+      type: apiKey
+      in: cookie
+      name: accessToken  # Name of the cookie for access token
+    RefreshTokenAuth:
+      type: apiKey
+      in: cookie
+      name: refreshToken  # Name of the cookie for refresh token
+
+  schemas:
+
+# User Schema
+
+    User:
+      type: object
+      required:
+        - fullName
+        - email
+        - password
+        - phone
+        - gender
+      properties:
+        fullName:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        password:
+          type: string
+          example: password123
+        phone:
+          type: string
+          example: 1234567890
+        gender:
+          type: string
+          example: 'male'
+        avatar:
+          type: string
+          format: uri
+          example: 'https://example.com/avatar.jpg'
+        userType:
+          type: string
+          example: "normal, orgInreview, orgRejected, organiser" 
+        isVerified:
+          type: boolean
+          example: true
+        otp:
+          type: string
+          example: '123456'
+        otpExpiresAt:
+          type: string
+          format: date-time
+          example: '2024-09-01T13:11:44.052Z'
+        likedEvent:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: "List of UUIDs representing liked events."
+          example:
+            - "123e4567-e89b-12d3-a456-426614174000"
+            - "123e4567-e89b-12d3-a456-426614174001"
+        bookings_id:
+          type: array
+          items:
+           type: string
+           format: uuid
+          description: "List of UUIDs representing booking IDs."
+          example:
+           - "123e4567-e89b-12d3-a456-426614174002"
+           - "123e4567-e89b-12d3-a456-426614174003"
+        refreshToken:
+          type: string
+          example: sample_refresh_token
+        createdAt:
+          type: string
+          format: date-time
+          example: '2024-09-01T13:11:44.052Z'
+        updatedAt:
+           type: string
+           format: date-time
+           example: '2024-09-01T13:12:02.793Z'
+        v:
+           type: integer
+           example: 0
+
+# Admin schema   
+
+    Admin:
+      type: object
+      required:
+        - fullName
+        - email
+        - password
+        - phone
+        - gender
+      properties:
+        fullName:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        password:
+          type: string
+          example: password123
+        phone:
+          type: string
+          example: 1234567890
+        gender:
+          type: string
+          example: 'male'
+        avatar:
+          type: string
+          format: uri
+          example: 'https://example.com/avatar.jpg'
+        userType:
+          type: string
+          example: 'admin'
+        isVerified:
+          type: boolean
+          example: true
+        otp:
+          type: string
+          example: '123456'
+        otpExpiresAt:
+          type: string
+          format: date-time
+          example: '2024-09-01T13:11:44.052Z'
+        refreshToken:
+          type: string
+          example: sample_refresh_token
+        createdAt:
+          type: string
+          format: date-time
+          example: '2024-09-01T13:11:44.052Z'
+        updatedAt:
+           type: string
+           format: date-time
+           example: '2024-09-01T13:12:02.793Z'
+        v:
+           type: integer
+           example: 0
+
+# Organiser schema
+
+    Organiser:
+      type: object
+      required:
+        - userId
+        - companyName
+        - bio
+      properties:
+        userId:
+          type: UUIDs
+          example: 66d46810da1fab58b8633ba8
+        companyName:
+          type: string
+          example: Velocity
+        companyLogo:
+          type: string
+          format: uri
+          example: 'https://example.com/logo.jpg'
+        bio:
+          type: string
+          example: 'admin'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2024-09-01T13:11:44.052Z'
+        updatedAt:
+           type: string
+           format: date-time
+           example: '2024-09-01T13:12:02.793Z'
+        v:
+           type: integer
+           example: 0

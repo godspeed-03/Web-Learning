@@ -10,6 +10,7 @@ class user {
         this.email = email
         this.age = age
     }
+
     
 }
 
