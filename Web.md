@@ -231,3 +231,45 @@ Full stack
 Firebase
 
 Strapi
+
+
+| Time               | Activity                                      | Hours  | Notes                                                              |
+|-------------------|----------------------------------------------|--------|--------------------------------------------------------------------|
+| 6:00 AM - 6:30 AM  | Plan the day                               | 0.5    | Prioritize tasks for each activity block.                             |
+| 6:30 AM - 7:30 AM  | DSA (DAA - Design & Analysis of Algorithms) | 1      | Focus on key concepts/problems.                                     |
+| 7:30 AM - 7:45 AM  | Break                                       | 0.25   |                                                                    |
+| 7:45 AM - 8:45 AM  | DSA (DAA - Design & Analysis of Algorithms) | 1      | Continue working on DSA problems.                                   |
+| 8:45 AM - 9:00 AM  | Break                                       | 0.25   |                                                                    |
+| 9:00 AM - 1:00 PM | Freelancing Work                             | 4      | Set clear boundaries with clients.                                  |
+| 1:00 PM - 2:00 PM  | Lunch & Relax                               | 1      |                                                                    |
+| 2:00 PM - 4:30 PM  | Web2 Projects / Machine Coding                | 2.5      | Define specific project goals for each session.                       |
+| 4:30 PM - 5:00 PM  | Break / Rest (Walk, Refresh)                | 0.5      |                                                                    |
+| 5:00 PM - 7:30 PM  | UPSC Preparation (Reading, Notes, Writing)    | 2.5      | Focus on specific topics/sections.                                   |
+| 7:30 PM - 8:30 PM  | Dinner & Relax                               | 1      |                                                                    |
+| 8:30 PM - 11:30 PM | Web2 Projects / Machine Coding                | 3      | Define specific project goals for each session.                       |
+| 11:30 PM - 12:00 AM | Revision                                     | 0.5    | Review key concepts from the day.                                      |
+| 12:00 AM - 6:00 AM | Sleep                                       | 6      | Prioritize getting enough sleep.                                     |
+
+**Weekends (Saturday - Sunday)**
+
+| Time               | Activity                                      | Hours  | Notes                                                              |
+|-------------------|----------------------------------------------|--------|--------------------------------------------------------------------|
+| 6:00 AM - 6:30 AM  | Plan the day                               | 0.5    |                                                                    |
+| 6:30 AM - 9:30 AM  | DSA Contest (Live or Virtual)                 | 3      | Analyze performance after the contest.                              |
+| 9:30 AM - 10:00 AM | Break & Breakfast                            | 0.5    |                                                                    |
+| 10:00 AM - 1:00 PM | DevOps Learning (Docker, Kubernetes, CI/CD)    | 3      | Focus on practical application and hands-on exercises.                 |
+| 1:00 PM - 2:00 PM  | Lunch & Relax                               | 1      |                                                                    |
+| 2:00 PM - 5:00 PM  | Web3 Learning / Web2 Projects                 | 3      | Explore specific Web3 projects and technologies.                    |
+| 5:00 PM - 6:00 PM  | Break / Rest (Walk, Refresh)                | 1      |                                                                    |
+| 6:00 PM - 9:00 PM  | UPSC Revision & Mock Tests                    | 3      | Analyze mock test results and identify areas for improvement.        |
+| 9:00 PM - 10:00 PM  | Dinner & Relax                               | 1      |                                                                    |
+| 10:00 PM - 12:00 AM | Free time / Projects                        | 2      |                                                                    |
+| 12:00 AM - 6:00 AM | Sleep                                       | 6      |                                                                    |
+
+**Summary of Hours:**
+
+* **DSA:** 2 hours (weekdays) + 3 hours (weekends) = 5 hours
+* **Web2/Projects:** 3 hours (weekdays) + 3 hours (weekends) = 6 hours
+* **Freelancing:** 4 hours (weekdays)
+* **UPSC:** 2.5 hours (weekdays) + 3 hours (weekends) = 5.5 hours
+* **DevOps:** 3 hours (weekends)
