@@ -5,6 +5,8 @@ import CenterDiv from './Components/CenterDiv'
 import useTheme from './Context/Context'
 import { useSelector } from 'react-redux'
 import DownloadButton from './Components/doenload'
+import KeywordTable from './Components/kpiTable'
+import Table from './Components/Table'
 
 
 const App = () => {
@@ -23,10 +25,12 @@ const App = () => {
  
   return (
     <>
-    <DownloadButton />
-    <Header />
-    <Password />
-    <CenterDiv />
+    {/* <DownloadButton /> */}
+    {/* <Header /> */}
+    <Table />
+    <KeywordTable />
+    {/* <Password /> */}
+    {/* <CenterDiv /> */}
     </>
    
 
