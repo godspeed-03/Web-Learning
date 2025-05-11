@@ -1,0 +1,89 @@
+name: Auto Release
+
+on:
+    push:
+        branches:
+            - development
+        paths:
+            - package.json
+
+permissions:
+    contents: write
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Install jq & GitHub CLI
+              run: sudo apt-get install -y jq && gh auth status || echo "GitHub CLI installed"
+
+            - name: Read version from package.json
+              id: package
+              run: |
+                  VERSION=$(jq -r .version package.json)
+                  echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+            - name: Check if Release Already Exists
+              id: check_release
+              run: |
+                  if gh release view v${{ env.VERSION }} > /dev/null 2>&1; then
+                    echo "Release already exists. Skipping..."
+                    echo "EXISTS=true" >> $GITHUB_ENV
+                  else
+                    echo "EXISTS=false" >> $GITHUB_ENV
+                  fi
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Stop if Release Exists
+              if: env.EXISTS == 'true'
+              run: exit 0
+
+            - name: Generate Changelog (GitHub Usernames Only)
+              id: changelog
+              run: |
+                  PREV_TAG=$(git tag --sort=-v:refname | head -n 1)  # Get latest tag
+
+                  if [ -z "$PREV_TAG" ]; then
+                    COMMITS=$(git log --pretty=format:"%H" --no-merges)  
+                    CHANGELOG_URL="https://github.com/${{ github.repository }}/commits/${{ env.VERSION }}"
+                  else
+                    COMMITS=$(git log $PREV_TAG..HEAD --pretty=format:"%H" --no-merges)
+                    CHANGELOG_URL="https://github.com/${{ github.repository }}/compare/$PREV_TAG...v${{ env.VERSION }}"
+                  fi
+
+                  CHANGELOG=""
+
+                  for COMMIT in $COMMITS; do
+                    MESSAGE=$(git log -1 --pretty=format:"%s" $COMMIT)
+                    AUTHOR=$(gh api repos/${{ github.repository }}/commits/$COMMIT | jq -r '.author.login')
+                    CHANGELOG+="- $MESSAGE (@$AUTHOR)\n"
+                  done
+
+                  echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+                  echo -e "$CHANGELOG" >> $GITHUB_ENV
+                  echo "EOF" >> $GITHUB_ENV
+
+                  echo "CHANGELOG_URL=$CHANGELOG_URL" >> $GITHUB_ENV
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  tag_name: v${{ env.VERSION }}
+                  name: Release v${{ env.VERSION }}
+                  body: |
+                      ## What's Changed
+                      ${{ env.CHANGELOG }}
+
+                      **Full Changelog:** [View Changes](${{ env.CHANGELOG_URL }})
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
