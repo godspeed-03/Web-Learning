@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tax Invoice</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 40px;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    .header, .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .logo {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+    }
+    .right-align {
+      text-align: right;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .section {
+      margin-top: 30px;
+    }
+    .label-box {
+      background: #1e40af;
+      color: white;
+      padding: 8px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .address-box {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .table th {
+      background: #1e40af;
+      color: white;
+      padding: 10px;
+      text-align: left;
+    }
+    .table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .note-tax-box {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .note {
+      width: 60%;
+      background: #f3f4f6;
+      padding: 15px;
+      font-size: 14px;
+    }
+    .totals {
+      text-align: right;
+      width: 40%;
+      font-size: 14px;
+    }
+    .totals p {
+      margin: 4px 0;
+    }
+    .center-text {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+    }
+    a {
+      color: #1e40af;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <img src="./image.png" alt="Logo" class="logo" />
+    </div>
+    <div class="right-align">
+      <h2 style="margin: 0;">Tax Invoice</h2>
+      <p>Date: 01/06/2025</p>
+      <p>Invoice ID: 200211</p>
+      <p>Purchase ID: 01</p>
+      <p>Customer ID: A01042</p>
+      <p>Payment done on: 06/06/2025</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="address-box">
+      <div>
+        <div class="label-box">Billed To</div>
+        <p>Brain4ce Education Solutions Private Limited (Edureka)<br />
+          INDIQUBE ETA, No. 38/4, 4th FLOOR<br />
+          DODDANEKUNDI VILLAGE, OUTER RING ROAD<br />
+          BENGALURU, Karnataka, India 560048<br />
+          GSTIN: 29AAECB5440J1ZK</p>
+      </div>
+      <div>
+        <div class="label-box">Shipped To</div>
+        <p>Brain4ce Education Solutions Private Limited (Edureka)<br />
+          INDIQUBE ETA, No. 38/4, 4th FLOOR<br />
+          DODDANEKUNDI VILLAGE, OUTER RING ROAD<br />
+          BENGALURU, Karnataka, India 560048<br />
+          GSTIN: 29AAECB5440J1ZK</p>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th>Description</th>
+      <th>Unit Cost</th>
+      <th>Quantity</th>
+      <th>Amount</th>
+    </tr>
+    <tr>
+      <td>Subscription Fees from 28th May to 28th June</td>
+      <td>₹230,000</td>
+      <td>1</td>
+      <td>₹230,000</td>
+    </tr>
+  </table>
+
+  <div class="note-tax-box">
+    <div class="note">
+      <div class="label-box">Special Notes</div>
+      <p>Thirty Thousand Six Hundred Eighty Rupees is advance payment for the service period of 28th May to 28th June 2025</p>
+    </div>
+    <div class="totals">
+      <p>Subtotal: ₹230,000</p>
+      <p>Tax (18%): ₹41,400</p>
+      <p><strong>Total: ₹271,400</strong></p>
+    </div>
+  </div>
+
+  <div class="center-text">
+    <p><strong>Thank you for your business!</strong></p>
+    <p>Should you have any enquiries concerning this invoice, please contact.</p>
+    <p><a href="mailto:admin@flable.ai">admin@flable.ai</a> / +91 7769975889</p>
+    <p><a href="https://flable.ai">flable.ai</a></p>
+  </div>
+</body>
+</html>
