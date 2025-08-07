@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Razorpay Subscription Demo</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <h2>Subscribe Now</h2>
+  <button id="pay-btn">Subscribe with Razorpay</button>
+
+  <script>
+    document.getElementById('pay-btn').onclick = async function () {
+      const res = await fetch('http://localhost:3001/create-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const { subscription } = await res.json();
+
+      const options = {
+        key: '', // Replace with test key
+        subscription_id: subscription.id,
+        name: 'Test Company',
+        description: 'Test Razorpay Subscription',
+        image: 'https://your-logo-url.com/logo.png',
+        prefill: {
+          name: 'Test User',
+          email: 'test@example.com',
+          contact: '9999999999'
+        },
+        theme: { color: '#F37254' },
+        handler: function (response) {
+          alert('Subscribed! ID: ' + response.razorpay_subscription_id);
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    };
+  </script>
+</body>
+</html>
